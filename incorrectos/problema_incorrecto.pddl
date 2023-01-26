@@ -1,0 +1,10 @@
+(define (problem rutas-1)
+ (:domain rutas-clase)
+ (:objects coche ciudad-1 ciudad-2)
+ (:INIT 
+    (conectado ciudad-1 ciudad-2)
+    (conectado ciudad-2 ciudad-1)
+    (en ciudad-1 coche)
+ )
+ (:goal (and (en ciudad-2 coche))
+)
