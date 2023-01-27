@@ -5,7 +5,8 @@
     fabrica1 fabrica2 - location 
     tren - vehicle 
     contenedor1 contenedor2 contenedor3 contenedor4 contenedor5 contenedor6 contenedor7 contenedor8 - package 
-    capacity0 capacity1 capacity2 capacity3 capacity4 - num  
+    vehCapacity0 vehCapacity1 vehCapacity2 vehCapacity3 vehCapacity4 - numVeh  
+    locCapacity0 locCapacity1 locCapacity2 locCapacity3 - numLoc  
   )
   (:init
     ; connecting locations bidirectional 
@@ -27,21 +28,28 @@
     (in contenedor7 puerto)
     (in contenedor8 puerto)
     (at tren puerto)
+    (isPort puerto)
+    (not(isPort almacen))
+    (not(isPort fabrica1))
+    (not(isPort fabrica2))
     ; init capacities
-    (capacityVeh tren capacity0)
-    (capacityLoc almacen capacity0)
-    (capacityLoc fabrica1 capacity0)
-    (capacityLoc fabrica2 capacity0)
+    (capacityVeh tren vehCapacity0)
+    (capacityLoc almacen locCapacity0)
+    (capacityLoc fabrica1 locCapacity0)
+    (capacityLoc fabrica2 locCapacity0)
     ; set max capaticies
-    (maxCapacityVeh tren capacity4)
-    (maxCapacityLoc almacen capacity3)
-    (maxCapacityLoc fabrica1 capacity2)
-    (maxCapacityLoc fabrica2 capacity3)
+    (maxCapacityVeh tren vehCapacity4)
+    (maxCapacityLoc almacen locCapacity3)
+    (maxCapacityLoc fabrica1 locCapacity2)
+    (maxCapacityLoc fabrica2 locCapacity3)
     ; counts for capacities
-    (count capacity0 capacity1)
-    (count capacity1 capacity2)
-    (count capacity2 capacity3)
-    (count capacity3 capacity4)
+    (countVeh vehCapacity0 vehCapacity1)
+    (countVeh vehCapacity1 vehCapacity2)
+    (countVeh vehCapacity2 vehCapacity3)
+    (countVeh vehCapacity3 vehCapacity4)
+    (countLoc locCapacity0 locCapacity1)
+    (countLoc locCapacity1 locCapacity2)
+    (countLoc locCapacity2 locCapacity3)
     ; (not(processed contenedor1))
     ; (not (processed contenedor2))
     ; (not (processed contenedor3))
@@ -54,11 +62,14 @@
  (:goal 
   (and 
     ; (at tren fabrica1)
-    ; (capacity tren trenCapacity4)
-    ; (in contenedor1 fabrica2)
+    ; (capacityLoc almacen capacity1)
     (in contenedor1 almacen)
     (in contenedor2 almacen)
     (in contenedor3 almacen)
+    (in contenedor4 fabrica2)
+    (in contenedor5 fabrica2)
+    (in contenedor6 fabrica2)
+    (in contenedor7 fabrica2)
   )
     ; (and 
     ;   (processed contenedor1)
