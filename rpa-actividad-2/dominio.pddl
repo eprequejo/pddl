@@ -1,5 +1,5 @@
 (define (domain paths-class)
-  (:requirements :typing :equality :negative-preconditions :disjunctive-preconditions)
+  (:requirements :typing :equality :negative-preconditions :disjunctive-preconditions :conditional-effects)
   (:types vehicle package location numVeh numLoc)
   (:predicates
     (connected ?via1 - location ?via2 - location) ; via1 via2 are connected
@@ -13,11 +13,9 @@
     (maxCapacityVeh ?veh - vehicle ?c - numVeh) ; vehicle has max capacity of c
     (maxCapacityLoc ?loc - location ?c - numLoc) ; location has max capacity of c
     (isPort ?loc - location) ; loc is port
-
-    ; (full ?loc - location) ; loc is full of its capacity (train or locations)
-    ; (processed ?pack - package) ; pack is processed
-    ; (package ?pack) ; pack is package
-    ; (vehicle ?veh) ; veh is vehicle
+    (isFabric ?loc - location) ; loc is fabrica
+    (isAlmacen ?loc - location) ; loc is almacen
+    (isProcessed ?pack - package) ; pack is processed
   )
   (:action move ; move vehicle from loc1 to loc2 
                   ; if vehicle is in loc1 and 
@@ -60,6 +58,7 @@
       (countVeh ?vehC1 ?vehC2)
       (capacityVeh ?veh ?vehC1)
       (isPort ?loc)
+      (not(isProcessed ?pack))
     )
     :effect (and 
       (loaded ?pack ?veh)
@@ -121,8 +120,6 @@
       (capacityLoc ?loc ?locC1)
       (not(isPort ?loc))
       (not(maxCapacityLoc ?loc ?locC1))
-      ; (not(maxCapacityLoc ?loc ?locC2))
-      ; (not(processed ?pack))
     )
     :effect (and 
       (in ?pack ?loc)
@@ -131,7 +128,27 @@
       (not (capacityVeh ?veh ?vehC2))
       (capacityLoc ?loc ?locC2)
       (not(capacityLoc ?loc ?locC1))
+      (when
+        (and (isFabric ?loc))
+        (isProcessed ?pack)
+      )
     )
   )
-
+  (:action remove ; remove package from almacen if
+                  ; package is processed
+                  ; package is in almacen
+    :parameters (
+      ?pack - package 
+      ?loc - location
+      ?c1 ?c2 - numLoc)
+    :precondition (and 
+      (isProcessed ?pack)
+      (isAlmacen ?loc)
+      (countLoc ?c1 ?c2)
+    )
+    :effect (and 
+      (capacityLoc ?loc ?c1)
+      (not (capacityLoc ?loc ?c2))
+    )
+  )
 )
