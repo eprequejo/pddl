@@ -8,8 +8,7 @@
     (loaded ?pack - package ?veh - vehicle) ; pack is loaded in train
     (capacityVeh ?veh - vehicle ?c - num) ; veh has capacity c
     (capacityLoc ?loc - location ?c - num) ; location has capacity c
-    (countForwards ?c1 - num ?c2 - num) ; count c2 comes after c1 
-    (countBackwards ?c1 - num ?c2 - num) ; count c1 comes after c2
+    (count ?c1 - num ?c2 - num) ; count c2 comes after c1 
     (maxCapacityVeh ?veh - vehicle ?c - num) ; vehicle has max capacity of c
     (maxCapacityLoc ?loc - location ?c - num) ; location has max capacity of c
 
@@ -56,7 +55,7 @@
     :precondition (and 
       (in ?pack ?loc) 
       (at ?veh ?loc)
-      (countForwards ?vehC1 ?vehC2)
+      (count ?vehC1 ?vehC2)
       (capacityVeh ?veh ?vehC1)
       ; (countBackwards ?locC1 ?locC2)
       ; (capacityLoc ?loc ?locC2)
@@ -85,16 +84,16 @@
     :precondition (and 
       (loaded ?pack ?veh) 
       (at ?veh ?loc) 
-      (countBackwards ?c1 ?c2)
-      (capacityVeh ?veh ?c1)
+      (count ?c1 ?c2)
+      (capacityVeh ?veh ?c2)
       ; (not(processed ?pack))
       ; (not(full ?veh))
     )
     :effect (and 
       (in ?pack ?loc)
       (not (loaded ?pack ?veh))
-      (capacityVeh ?veh ?c2)
-      (not (capacityVeh ?veh ?c1))
+      (capacityVeh ?veh ?c1)
+      (not (capacityVeh ?veh ?c2))
     )
   )
   ; (:action increment ; adds one unit to vehicule capacity
