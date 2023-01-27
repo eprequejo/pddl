@@ -29,6 +29,14 @@
     (at tren puerto)
     ; init capacities
     (capacityVeh tren capacity0)
+    (capacityLoc almacen capacity0)
+    (capacityLoc fabrica1 capacity0)
+    (capacityLoc fabrica2 capacity0)
+    ; set max capaticies
+    (maxCapacityVeh tren capacity4)
+    (maxCapacityLoc almacen capacity3)
+    (maxCapacityLoc fabrica1 capacity2)
+    (maxCapacityLoc fabrica2 capacity3)
     ; counts for capacities forwards and backwards
     (countForwards capacity0 capacity1)
     (countForwards capacity1 capacity2)

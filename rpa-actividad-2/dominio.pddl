@@ -7,8 +7,11 @@
     (at ?veh - vehicle ?loc - location) ; veh is at loc
     (loaded ?pack - package ?veh - vehicle) ; pack is loaded in train
     (capacityVeh ?veh - vehicle ?c - num) ; veh has capacity c
+    (capacityLoc ?loc - location ?c - num) ; location has capacity c
     (countForwards ?c1 - num ?c2 - num) ; count c2 comes after c1 
     (countBackwards ?c1 - num ?c2 - num) ; count c1 comes after c2
+    (maxCapacityVeh ?veh - vehicle ?c - num) ; vehicle has max capacity of c
+    (maxCapacityLoc ?loc - location ?c - num) ; location has max capacity of c
 
     ; (full ?loc - location) ; loc is full of its capacity (train or locations)
     ; (processed ?pack - package) ; pack is processed
@@ -37,30 +40,34 @@
         (not (at ?veh ?loc1))
     )
   )
-  (:action load ; load pack on train with capacity c1 and next capacity c2 from loc 
-                  ; if pack is in loc and 
-                  ; if veh is at loc and
-                  ; if pack is not processed and 
-                  ; if veh is not full capacity capacity4 and
-                  ; if it is package
+  (:action load ; load pack on train taking into account train capacity (vehC1, vehC2) and location capacity (locC1, locC2)
+                ; if pack is in loc and 
+                ; if veh is at loc and
+                ; if pack is not processed and 
+                ; if veh is not full capacity capacity4 and
+                ; if it is package
     :parameters (
       ?pack - package 
       ?veh - vehicle 
       ?loc - location
-      ?c1 ?c2 - num
+      ?vehC1 ?vehC2 - num
+      ; ?locC1 ?locC2 - num
     )
     :precondition (and 
       (in ?pack ?loc) 
       (at ?veh ?loc)
-      (countForwards ?c1 ?c2)
-      (capacityVeh ?veh ?c1)
+      (countForwards ?vehC1 ?vehC2)
+      (capacityVeh ?veh ?vehC1)
+      ; (countBackwards ?locC1 ?locC2)
+      ; (capacityLoc ?loc ?locC2)
     )
     :effect (and 
       (loaded ?pack ?veh)
       (not (in ?pack ?loc))
-      (capacityVeh ?veh ?c2)
-      (not(capacityVeh ?veh ?c1))
-      ; TODO location is maybe empty decrease localtion capacity
+      (capacityVeh ?veh ?vehC2)
+      (not(capacityVeh ?veh ?vehC1))
+      ; (capacityLoc ?loc ?locC1)
+      ; (not(capacityLoc ?loc ?locC2))
     )
   )
   (:action drop ; drop pack on loc from veh with capacity c1 and next capacity c2
