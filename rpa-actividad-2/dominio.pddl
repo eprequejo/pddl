@@ -6,7 +6,7 @@
     (in ?pack - package ?loc - location) ; pack is in loc
     (at ?veh - vehicle ?loc - location) ; veh is at loc
     (loaded ?pack - package ?veh - vehicle) ; pack is loaded in train
-    (capacity ?veh - vehicle ?c - num) ; veh has capacity c
+    (capacityVeh ?veh - vehicle ?c - num) ; veh has capacity c
     (countForwards ?c1 - num ?c2 - num) ; count c2 comes after c1 
     (countBackwards ?c1 - num ?c2 - num) ; count c1 comes after c2
 
@@ -41,7 +41,7 @@
                   ; if pack is in loc and 
                   ; if veh is at loc and
                   ; if pack is not processed and 
-                  ; if veh is not full capacity trenCapacity4 and
+                  ; if veh is not full capacity capacity4 and
                   ; if it is package
     :parameters (
       ?pack - package 
@@ -53,13 +53,13 @@
       (in ?pack ?loc) 
       (at ?veh ?loc)
       (countForwards ?c1 ?c2)
-      (capacity ?veh ?c1)
+      (capacityVeh ?veh ?c1)
     )
     :effect (and 
       (loaded ?pack ?veh)
       (not (in ?pack ?loc))
-      (capacity ?veh ?c2)
-      (not(capacity ?veh ?c1))
+      (capacityVeh ?veh ?c2)
+      (not(capacityVeh ?veh ?c1))
       ; TODO location is maybe empty decrease localtion capacity
     )
   )
@@ -79,15 +79,15 @@
       (loaded ?pack ?veh) 
       (at ?veh ?loc) 
       (countBackwards ?c1 ?c2)
-      (capacity ?veh ?c1)
+      (capacityVeh ?veh ?c1)
       ; (not(processed ?pack))
       ; (not(full ?veh))
     )
     :effect (and 
       (in ?pack ?loc)
       (not (loaded ?pack ?veh))
-      (capacity ?veh ?c2)
-      (not (capacity ?veh ?c1))
+      (capacityVeh ?veh ?c2)
+      (not (capacityVeh ?veh ?c1))
     )
   )
   ; (:action increment ; adds one unit to vehicule capacity

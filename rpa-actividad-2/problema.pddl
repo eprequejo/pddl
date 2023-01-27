@@ -5,9 +5,10 @@
     fabrica1 fabrica2 - location 
     tren - vehicle 
     contenedor1 contenedor2 contenedor3 contenedor4 contenedor5 contenedor6 contenedor7 contenedor8 - package 
-    trenCapacity0 trenCapacity1 trenCapacity2 trenCapacity3 trenCapacity4 - num  
+    capacity0 capacity1 capacity2 capacity3 capacity4 - num  
   )
   (:init
+    ; connecting locations bidirectional 
     (connected almacen puerto)
     (connected puerto fabrica1)
     (connected fabrica1 fabrica2)
@@ -16,6 +17,7 @@
     (connected almacen fabrica2)
     (connected fabrica2 fabrica1)
     (connected fabrica1 puerto)
+    ; init containers, locations and train
     (in contenedor1 puerto)
     (in contenedor2 puerto)
     (in contenedor3 puerto)
@@ -25,15 +27,17 @@
     (in contenedor7 puerto)
     (in contenedor8 puerto)
     (at tren puerto)
-    (capacity tren trenCapacity0)
-    (countForwards trenCapacity0 trenCapacity1)
-    (countForwards trenCapacity1 trenCapacity2)
-    (countForwards trenCapacity2 trenCapacity3)
-    (countForwards trenCapacity3 trenCapacity4)
-    (countBackwards trenCapacity4 trenCapacity3)
-    (countBackwards trenCapacity3 trenCapacity2)
-    (countBackwards trenCapacity2 trenCapacity1)
-    (countBackwards trenCapacity1 trenCapacity0)
+    ; init capacities
+    (capacityVeh tren capacity0)
+    ; counts for capacities forwards and backwards
+    (countForwards capacity0 capacity1)
+    (countForwards capacity1 capacity2)
+    (countForwards capacity2 capacity3)
+    (countForwards capacity3 capacity4)
+    (countBackwards capacity4 capacity3)
+    (countBackwards capacity3 capacity2)
+    (countBackwards capacity2 capacity1)
+    (countBackwards capacity1 capacity0)
     ; (not(processed contenedor1))
     ; (not (processed contenedor2))
     ; (not (processed contenedor3))
