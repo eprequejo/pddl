@@ -16,6 +16,7 @@
     (isFabric ?loc - location) ; loc is fabrica
     (isAlmacen ?loc - location) ; loc is almacen
     (isProcessed ?pack - package) ; pack is processed
+    (isRemoved ?pack) ; pack is removed
   )
   (:action move ; move vehicle from loc1 to loc2 
                   ; if vehicle is in loc1 and 
@@ -88,6 +89,7 @@
       (countLoc ?locC1 ?locC2)
       (not(isPort ?loc))
       (capacityLoc ?loc ?locC2)
+      (not(isRemoved ?pack))
     )
     :effect (and 
       (loaded ?pack ?veh)
@@ -144,11 +146,14 @@
     :precondition (and 
       (isProcessed ?pack)
       (isAlmacen ?loc)
+      (in ?pack ?loc)
       (countLoc ?c1 ?c2)
+      (not(isRemoved ?pack))
     )
     :effect (and 
       (capacityLoc ?loc ?c1)
       (not (capacityLoc ?loc ?c2))
+      (isRemoved ?pack)
     )
   )
 )
