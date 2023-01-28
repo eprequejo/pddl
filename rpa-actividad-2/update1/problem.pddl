@@ -9,6 +9,11 @@
     locCapacity0 locCapacity1 locCapacity2 locCapacity3 - numLoc  
   )
   (:init
+    ;=====================================================
+    ; update 1 add connection between almacen and fabrica2
+    (connected almacen fabrica2)
+    (connected fabrica2 almacen)
+    ;=====================================================
     ; connecting locations bidirectional 
     (connected almacen puerto)
     (connected puerto fabrica1)
@@ -63,7 +68,6 @@
     (capacityLoc fabrica1 locCapacity0)
     (capacityLoc fabrica2 locCapacity0)
     ; set max capaticies
-    (maxCapacityVeh tren vehCapacity4)
     (maxCapacityLoc almacen locCapacity3)
     (maxCapacityLoc fabrica1 locCapacity2)
     (maxCapacityLoc fabrica2 locCapacity3)

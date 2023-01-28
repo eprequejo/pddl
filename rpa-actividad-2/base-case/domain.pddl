@@ -10,7 +10,6 @@
     (capacityLoc ?loc - location ?c - numLoc) ; location has capacity c
     (countVeh ?c1 - numVeh ?c2 - numVeh) ; count c2 comes after c1 
     (countLoc ?c1 - numLoc ?c2 - numLoc) ; count c2 comes after c1 
-    (maxCapacityVeh ?veh - vehicle ?c - numVeh) ; vehicle has max capacity of c
     (maxCapacityLoc ?loc - location ?c - numLoc) ; location has max capacity of c
     (isPort ?loc - location) ; loc is port
     (isFabric ?loc - location) ; loc is fabrica
